@@ -9,7 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button x:Name="RaiseNotification" Click="RaiseNotification_Click"
+        <Button x:ConnectionId='1' x:Name="RaiseNotification"                                
                 Content="Raise"/>
     </Grid>
 </Page>
+

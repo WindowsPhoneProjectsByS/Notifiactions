@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -43,6 +45,23 @@ namespace Powiadomienia
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
+        }
+
+        private void RaiseNotification_Click(object sender, RoutedEventArgs e)
+        {
+            ToastTemplateType toastType = ToastTemplateType.ToastText02;
+
+            XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastType);
+
+            XmlNodeList toastTextElement = toastXml.GetElementsByTagName("text");
+            toastTextElement[0].AppendChild(toastXml.CreateTextNode("Hello C# Corner"));
+            toastTextElement[1].AppendChild(toastXml.CreateTextNode("Jakaś treść"));
+
+            IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
+            ((XmlElement)toastNode).SetAttribute("duration", "long");
+
+            ToastNotification toast = new ToastNotification(toastXml);
+            ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
     }
 }
