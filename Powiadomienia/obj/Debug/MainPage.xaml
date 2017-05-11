@@ -9,8 +9,16 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button x:ConnectionId='1' x:Name="RaiseNotification"                                
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button x:ConnectionId='1' Grid.Row="0" x:Name="RaiseNotification"                                
                 Content="Raise"/>
+        <Button x:ConnectionId='2' x:Name="GoToTimerPageButton" Grid.Row="1"
+                Content="Timer"                                   />
     </Grid>
 </Page>
 

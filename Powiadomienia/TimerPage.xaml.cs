@@ -35,6 +35,8 @@ namespace Powiadomienia
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            initComboBox();
         }
 
         /// <summary>
@@ -107,5 +109,43 @@ namespace Powiadomienia
         }
 
         #endregion
+
+        private void initComboBox()
+        {
+            initHourCombobox();
+            initMinuteComboBox();
+            initSecondComboBox();
+        }
+
+        private void initHourCombobox()
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                HourComboBox.Items.Add(i.ToString());
+            }
+
+            HourComboBox.SelectedIndex = 0;
+        }
+
+        private void initMinuteComboBox()
+        {
+            for (int i = 0; i < 60; i++)
+            {
+                MinuteComboBox.Items.Add(i.ToString());
+            }
+
+            MinuteComboBox.SelectedIndex = 0;
+        }
+
+        private void initSecondComboBox()
+        {
+            for (int i = 0; i < 60; i++)
+            {
+                SecondComboBox.Items.Add(i.ToString());
+            }
+
+            SecondComboBox.SelectedIndex = 1;
+        }
+
     }
 }

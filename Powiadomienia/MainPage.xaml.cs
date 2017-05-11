@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace Powiadomienia
@@ -49,6 +50,11 @@ namespace Powiadomienia
 
         private void RaiseNotification_Click(object sender, RoutedEventArgs e)
         {
+            showHarderWay();
+        }
+
+        private void showHarderWay()
+        {
             ToastTemplateType toastType = ToastTemplateType.ToastText02;
 
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastType);
@@ -62,6 +68,11 @@ namespace Powiadomienia
 
             ToastNotification toast = new ToastNotification(toastXml);
             ToastNotificationManager.CreateToastNotifier().Show(toast);
+        }
+
+        private void GoToTimerPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TimerPage));
         }
     }
 }

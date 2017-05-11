@@ -9,7 +9,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button x:Name="RaiseNotification" Click="RaiseNotification_Click"
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" x:Name="RaiseNotification" Click="RaiseNotification_Click"
                 Content="Raise"/>
+        <Button x:Name="GoToTimerPageButton" Grid.Row="1"
+                Content="Timer"  Click="GoToTimerPageButton_Click"/>
     </Grid>
 </Page>
