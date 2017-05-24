@@ -78,15 +78,16 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Name="RaiseNotification" Click="RaiseNotification_Click"
+            <Button x:ConnectionId='1' Grid.Column="0" x:Name="RaiseNotification"                                
                 Content="Usuń" HorizontalAlignment="Center" FontSize="25"/>
-            <Button x:Name="GoToTimerPageButton" Grid.Column="1"
-                Content="Timer"  Click="GoToTimerPageButton_Click" HorizontalAlignment="Center"
+            <Button x:ConnectionId='2' x:Name="GoToTimerPageButton" Grid.Column="1"
+                Content="Timer"                                    HorizontalAlignment="Center"
                     FontSize="25"/>
-            <Button x:Name="GoToDatePageButton" Grid.Column="2"
-                Content="Date"  Click="GoToDatePageButton_Click"  HorizontalAlignment="Center"
+            <Button x:ConnectionId='3' x:Name="GoToDatePageButton" Grid.Column="2"
+                Content="Date"                                    HorizontalAlignment="Center"
                     FontSize="25"/>
         </Grid>
         
     </Grid>
 </Page>
+
