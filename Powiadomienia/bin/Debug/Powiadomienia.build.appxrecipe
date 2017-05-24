@@ -55,6 +55,9 @@
     <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\bin\Debug\DatePage.xbf">
+      <PackagePath>DatePage.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\bin\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
     </AppxPackagedFile>

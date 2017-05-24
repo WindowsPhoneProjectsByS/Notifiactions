@@ -124,27 +124,29 @@ namespace Powiadomienia.Powiadomienia_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[9];
-            _typeNameTable[0] = "Powiadomienia.MainPage";
+            _typeNameTable = new string[10];
+            _typeNameTable[0] = "Powiadomienia.DatePage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[3] = "Powiadomienia.TimerPage";
-            _typeNameTable[4] = "Powiadomienia.Common.NavigationHelper";
-            _typeNameTable[5] = "Windows.UI.Xaml.DependencyObject";
-            _typeNameTable[6] = "Powiadomienia.Common.ObservableDictionary";
-            _typeNameTable[7] = "Object";
-            _typeNameTable[8] = "String";
+            _typeNameTable[3] = "Powiadomienia.Common.NavigationHelper";
+            _typeNameTable[4] = "Windows.UI.Xaml.DependencyObject";
+            _typeNameTable[5] = "Powiadomienia.Common.ObservableDictionary";
+            _typeNameTable[6] = "Object";
+            _typeNameTable[7] = "String";
+            _typeNameTable[8] = "Powiadomienia.MainPage";
+            _typeNameTable[9] = "Powiadomienia.TimerPage";
 
-            _typeTable = new global::System.Type[9];
-            _typeTable[0] = typeof(global::Powiadomienia.MainPage);
+            _typeTable = new global::System.Type[10];
+            _typeTable[0] = typeof(global::Powiadomienia.DatePage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[3] = typeof(global::Powiadomienia.TimerPage);
-            _typeTable[4] = typeof(global::Powiadomienia.Common.NavigationHelper);
-            _typeTable[5] = typeof(global::Windows.UI.Xaml.DependencyObject);
-            _typeTable[6] = typeof(global::Powiadomienia.Common.ObservableDictionary);
-            _typeTable[7] = typeof(global::System.Object);
-            _typeTable[8] = typeof(global::System.String);
+            _typeTable[3] = typeof(global::Powiadomienia.Common.NavigationHelper);
+            _typeTable[4] = typeof(global::Windows.UI.Xaml.DependencyObject);
+            _typeTable[5] = typeof(global::Powiadomienia.Common.ObservableDictionary);
+            _typeTable[6] = typeof(global::System.Object);
+            _typeTable[7] = typeof(global::System.String);
+            _typeTable[8] = typeof(global::Powiadomienia.MainPage);
+            _typeTable[9] = typeof(global::Powiadomienia.TimerPage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -179,10 +181,11 @@ namespace Powiadomienia.Powiadomienia_XamlTypeInfo
             return -1;
         }
 
-        private object Activate_0_MainPage() { return new global::Powiadomienia.MainPage(); }
-        private object Activate_3_TimerPage() { return new global::Powiadomienia.TimerPage(); }
-        private object Activate_6_ObservableDictionary() { return new global::Powiadomienia.Common.ObservableDictionary(); }
-        private void MapAdd_6_ObservableDictionary(object instance, object key, object item)
+        private object Activate_0_DatePage() { return new global::Powiadomienia.DatePage(); }
+        private object Activate_5_ObservableDictionary() { return new global::Powiadomienia.Common.ObservableDictionary(); }
+        private object Activate_8_MainPage() { return new global::Powiadomienia.MainPage(); }
+        private object Activate_9_TimerPage() { return new global::Powiadomienia.TimerPage(); }
+        private void MapAdd_5_ObservableDictionary(object instance, object key, object item)
         {
             var collection = (global::System.Collections.Generic.IDictionary<global::System.String, global::System.Object>)instance;
             var newKey = (global::System.String)key;
@@ -200,9 +203,11 @@ namespace Powiadomienia.Powiadomienia_XamlTypeInfo
             switch (typeIndex)
             {
 
-            case 0:   //  Powiadomienia.MainPage
+            case 0:   //  Powiadomienia.DatePage
                 userType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_0_MainPage;
+                userType.Activator = Activate_0_DatePage;
+                userType.AddMemberName("NavigationHelper");
+                userType.AddMemberName("DefaultViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
@@ -215,52 +220,69 @@ namespace Powiadomienia.Powiadomienia_XamlTypeInfo
                 xamlType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 3:   //  Powiadomienia.TimerPage
-                userType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_3_TimerPage;
-                userType.AddMemberName("NavigationHelper");
-                userType.AddMemberName("DefaultViewModel");
-                userType.SetIsLocalType();
-                xamlType = userType;
-                break;
-
-            case 4:   //  Powiadomienia.Common.NavigationHelper
+            case 3:   //  Powiadomienia.Common.NavigationHelper
                 userType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 5:   //  Windows.UI.Xaml.DependencyObject
+            case 4:   //  Windows.UI.Xaml.DependencyObject
                 xamlType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 6:   //  Powiadomienia.Common.ObservableDictionary
+            case 5:   //  Powiadomienia.Common.ObservableDictionary
                 userType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.DictionaryAdd = MapAdd_6_ObservableDictionary;
+                userType.DictionaryAdd = MapAdd_5_ObservableDictionary;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 7:   //  Object
+            case 6:   //  Object
                 xamlType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 8:   //  String
+            case 7:   //  String
                 xamlType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 8:   //  Powiadomienia.MainPage
+                userType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_8_MainPage;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 9:   //  Powiadomienia.TimerPage
+                userType = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_9_TimerPage;
+                userType.AddMemberName("NavigationHelper");
+                userType.AddMemberName("DefaultViewModel");
+                userType.SetIsLocalType();
+                xamlType = userType;
                 break;
             }
             return xamlType;
         }
 
 
-        private object get_0_TimerPage_NavigationHelper(object instance)
+        private object get_0_DatePage_NavigationHelper(object instance)
+        {
+            var that = (global::Powiadomienia.DatePage)instance;
+            return that.NavigationHelper;
+        }
+        private object get_1_DatePage_DefaultViewModel(object instance)
+        {
+            var that = (global::Powiadomienia.DatePage)instance;
+            return that.DefaultViewModel;
+        }
+        private object get_2_TimerPage_NavigationHelper(object instance)
         {
             var that = (global::Powiadomienia.TimerPage)instance;
             return that.NavigationHelper;
         }
-        private object get_1_TimerPage_DefaultViewModel(object instance)
+        private object get_3_TimerPage_DefaultViewModel(object instance)
         {
             var that = (global::Powiadomienia.TimerPage)instance;
             return that.DefaultViewModel;
@@ -273,16 +295,28 @@ namespace Powiadomienia.Powiadomienia_XamlTypeInfo
 
             switch (longMemberName)
             {
+            case "Powiadomienia.DatePage.NavigationHelper":
+                userType = (global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Powiadomienia.DatePage");
+                xamlMember = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlMember(this, "NavigationHelper", "Powiadomienia.Common.NavigationHelper");
+                xamlMember.Getter = get_0_DatePage_NavigationHelper;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Powiadomienia.DatePage.DefaultViewModel":
+                userType = (global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Powiadomienia.DatePage");
+                xamlMember = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "Powiadomienia.Common.ObservableDictionary");
+                xamlMember.Getter = get_1_DatePage_DefaultViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
             case "Powiadomienia.TimerPage.NavigationHelper":
                 userType = (global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Powiadomienia.TimerPage");
                 xamlMember = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlMember(this, "NavigationHelper", "Powiadomienia.Common.NavigationHelper");
-                xamlMember.Getter = get_0_TimerPage_NavigationHelper;
+                xamlMember.Getter = get_2_TimerPage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Powiadomienia.TimerPage.DefaultViewModel":
                 userType = (global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Powiadomienia.TimerPage");
                 xamlMember = new global::Powiadomienia.Powiadomienia_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "Powiadomienia.Common.ObservableDictionary");
-                xamlMember.Getter = get_1_TimerPage_DefaultViewModel;
+                xamlMember.Getter = get_3_TimerPage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             }

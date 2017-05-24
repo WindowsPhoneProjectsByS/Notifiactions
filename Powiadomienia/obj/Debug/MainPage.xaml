@@ -11,14 +11,83 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Button x:ConnectionId='1' Grid.Row="0" x:Name="RaiseNotification"                                
-                Content="Raise"/>
-        <Button x:ConnectionId='2' x:Name="GoToTimerPageButton" Grid.Row="1"
-                Content="Timer"                                   />
+        
+        <ListView Grid.Row="0" x:Name="NotificationListView">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Grid>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal"/>
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="SelectionStates">
+                                            <VisualState x:Name="Unselected">
+                                                <Storyboard>
+                                                    <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Transparent"/>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="SelectedUnfocused">
+                                                <Storyboard>
+                                                    <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Red"/>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Border x:Name="myback" Background="Transparent">
+                                        <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  FontSize="30" Margin="0,0,10,0"
+                                   Grid.Row="0" Grid.Column="0">
+                            <Run Text="{Binding Title}"/>
+                        </TextBlock>
+                        <TextBlock Text="{Binding Content}" FontSize="30"
+                                   Grid.Row="1"/>
+                        <TextBlock Text="{Binding RemaingTime, UpdateSourceTrigger=PropertyChanged}" 
+                                   FontSize="30"
+                                   Grid.Row="2" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>    
+        </ListView>
+        
+        <Grid Grid.Row="1">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:ConnectionId='1' Grid.Column="0" x:Name="RaiseNotification"                                
+                Content="Usuń" HorizontalAlignment="Center" FontSize="25"/>
+            <Button x:ConnectionId='2' x:Name="GoToTimerPageButton" Grid.Column="1"
+                Content="Timer"                                    HorizontalAlignment="Center"
+                    FontSize="25"/>
+            <Button x:ConnectionId='3' x:Name="GoToDatePageButton" Grid.Column="2"
+                Content="Date"                                    HorizontalAlignment="Center"
+                    FontSize="25"/>
+        </Grid>
+        
     </Grid>
 </Page>
 

@@ -35,3 +35,8 @@ D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\TimerPage.
 D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\TimerPage.g.cs
 D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\TimerPage.xaml
 D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\TimerPage.xbf
+D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\bin\Debug\DatePage.xbf
+D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\DatePage.g.i.cs
+D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\DatePage.g.cs
+D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\DatePage.xaml
+D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\obj\Debug\DatePage.xbf

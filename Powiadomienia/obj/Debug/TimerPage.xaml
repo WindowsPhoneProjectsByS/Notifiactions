@@ -34,12 +34,12 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <TextBox Grid.Row="0" x:Name="Title" PlaceholderText="Tytuł" />
                 <TextBox Grid.Row="1" x:Name="Content" PlaceholderText="Zawartość"
-                         Height="90"/>
+                         Height="250"/>
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -58,13 +58,15 @@
                     <TextBlock Text="SS" Grid.Row="0" Grid.Column="2"
                                HorizontalAlignment="Center" FontSize="20"/>
 
-                    <ComboBox Grid.Row="1" Grid.Column="0" x:Name="HourComboBox"/>
-                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="MinuteComboBox"/>
-                    <ComboBox Grid.Row="1" Grid.Column="2" x:Name="SecondComboBox"/>
-
-                    
-                    
+                    <ComboBox Grid.Row="1" Grid.Column="0" x:Name="HourComboBox"
+                              VerticalContentAlignment="Center" FontSize="25"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="MinuteComboBox"
+                              VerticalContentAlignment="Center" FontSize="25"/>
+                    <ComboBox Grid.Row="1" Grid.Column="2" x:Name="SecondComboBox"
+                              VerticalContentAlignment="Center" FontSize="25"/>
                 </Grid>
+                <Button x:ConnectionId='1' x:Name="AddButton" Grid.Row="3" Content="Dodaj" HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Bottom"                      FontSize="25"/>
             </Grid>
         </Grid>
     </Grid>

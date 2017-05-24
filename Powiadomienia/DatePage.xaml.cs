@@ -1,7 +1,6 @@
 ﻿using Powiadomienia.Common;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,20 +26,18 @@ namespace Powiadomienia
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TimerPage : Page
+    public sealed partial class DatePage : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public TimerPage()
+        public DatePage()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            initComboBox();
         }
 
         /// <summary>
@@ -114,54 +111,16 @@ namespace Powiadomienia
 
         #endregion
 
-        private void initComboBox()
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            initHourCombobox();
-            initMinuteComboBox();
-            initSecondComboBox();
-        }
+            var date = MyDatePicker.Date;
+            var time = MyHourPicker.Time;
 
-        private void initHourCombobox()
-        {
-            for (int i = 0; i < 25; i++)
-            {
-                HourComboBox.Items.Add(i.ToString());
-            }
+            DateTime dateTime = new DateTime(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds);
 
-            HourComboBox.SelectedIndex = 0;
-        }
-
-        private void initMinuteComboBox()
-        {
-            for (int i = 0; i < 60; i++)
-            {
-                MinuteComboBox.Items.Add(i.ToString());
-            }
-
-            MinuteComboBox.SelectedIndex = 0;
-        }
-
-        private void initSecondComboBox()
-        {
-            for (int i = 0; i < 60; i++)
-            {
-                SecondComboBox.Items.Add(i.ToString());
-            }
-
-            SecondComboBox.SelectedIndex = 1;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            AddSheduleNotification();
-        }
-
-        private void AddSheduleNotification()
-        {
             string title = Title.Text;
             string content = Content.Text;
 
-            int seconds = PrepareTimeSpan();
 
             ToastTemplateType toastType = ToastTemplateType.ToastText02;
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastType);
@@ -173,8 +132,9 @@ namespace Powiadomienia
             IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
             ((XmlElement)toastNode).SetAttribute("duration", "long");
 
-            ScheduledToastNotification sheduledToast = new ScheduledToastNotification(toastXml, DateTimeOffset.Now.AddSeconds(seconds));
+            ScheduledToastNotification sheduledToast = new ScheduledToastNotification(toastXml, dateTime);
             sheduledToast.Id = IdService.GetNewId();
+            
 
             ToastNotifier notifier =
                     ToastNotificationManager.CreateToastNotifier();
@@ -182,26 +142,16 @@ namespace Powiadomienia
             notifier.AddToSchedule(sheduledToast);
 
             NotificationItem notItem = new NotificationItem();
+            notItem.Id = sheduledToast.Id;
             notItem.Title = title;
             notItem.Content = content;
-            notItem.SecondsToEnd = seconds;
-            notItem.Id = sheduledToast.Id;
+            notItem.DeliveryTime = dateTime;
 
             MainPage.NotificationList.Add(notItem);
 
             Frame.GoBack();
 
             //ShowMessage("Dodano powiadowmienie.");
-        }
-
-        private int PrepareTimeSpan()
-        {
-            int hours = Int32.Parse(HourComboBox.SelectedItem.ToString());
-            int minutes = Int32.Parse(MinuteComboBox.SelectedItem.ToString());
-            int seconds = Int32.Parse(SecondComboBox.SelectedItem.ToString());
-            int secondsResult = hours * 60 * 60 + minutes * 60 + seconds;
-
-            return secondsResult;
         }
 
         private async void ShowMessage(string message)
