@@ -1,6 +1,7 @@
 ﻿using Powiadomienia.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -148,6 +149,24 @@ namespace Powiadomienia
             notItem.DeliveryTime = dateTime;
 
             MainPage.NotificationList.Add(notItem);
+
+
+            TimeSpan secondsInSpan;
+
+            if (DateTime.Now > dateTime) {
+                secondsInSpan = DateTime.Now.Subtract(dateTime);
+            }
+            else
+            {
+                secondsInSpan = dateTime.Subtract(DateTime.Now);
+            }
+
+            int seconds = (int)secondsInSpan.TotalSeconds;
+
+            // service here to add today
+            Debug.WriteLine("Ilość godzin: {0}", seconds / 3600);
+            BadgeService.UpdateTodayNumber(seconds);
+            LatestTileService.UpdateLatestTaskTile();
 
             Frame.GoBack();
 

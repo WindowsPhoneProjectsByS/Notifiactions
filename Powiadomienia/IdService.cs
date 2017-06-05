@@ -31,5 +31,10 @@ namespace Powiadomienia
             int intId = Int32.Parse(id);
             IdConteiner.Remove(intId);
         }
+
+        public static void AddNewId(int id)
+        {
+            IdConteiner.Add(id);
+        }
     }
 }

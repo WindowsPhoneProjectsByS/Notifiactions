@@ -25,6 +25,18 @@
     <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\bin\Debug\Powiadomienia.exe">
       <PackagePath>Powiadomienia.exe</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\Assets\BadgeLogo.scale-100.jpg">
+      <PackagePath>Assets\BadgeLogo.scale-100.jpg</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\Assets\BadgeLogo.scale-140.jpg">
+      <PackagePath>Assets\BadgeLogo.scale-140.jpg</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\Assets\BadgeLogo.scale-240.jpg">
+      <PackagePath>Assets\BadgeLogo.scale-240.jpg</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Programowanie\VisualProjects\Powiadomienia\Powiadomienia\Assets\Logo.scale-240.png">
       <PackagePath>Assets\Logo.scale-240.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>

@@ -189,6 +189,10 @@ namespace Powiadomienia
 
             MainPage.NotificationList.Add(notItem);
 
+            BadgeService.UpdateTodayNumber(notItem.SecondsToEnd);
+
+            LatestTileService.UpdateLatestTaskTile();
+
             Frame.GoBack();
 
             //ShowMessage("Dodano powiadowmienie.");

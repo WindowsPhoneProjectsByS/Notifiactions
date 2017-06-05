@@ -8,6 +8,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -28,20 +30,25 @@ namespace Powiadomienia
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        DispatcherTimer dTimer;
-
+        ThreadPoolTimer periodicTimer;
+        public static ObservableCollection<NotificationItem> NotificationList;
+        public static int todayNotificationNumber = 0;
+       
         public MainPage()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
+
             Debug.WriteLine("Przygotowanie list z powiadomieniami.");
             PrepareNotificationListView();
-            StartDTimer();
+
+            StartPeriodicTimer();
+            LatestTileService.UpdateLatestTaskTile();
         }
 
-        public static ObservableCollection<NotificationItem> NotificationList;
+        
 
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
@@ -50,35 +57,13 @@ namespace Powiadomienia
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: Prepare page for display here.
 
-            // TODO: If your application contains multiple pages, ensure that you are
-            // handling the hardware Back button by registering for the
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
-            // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
+            
         }
 
         private void RaiseNotification_Click(object sender, RoutedEventArgs e)
         {
             DeleteNotification();
-        }
-
-        private void showHarderWay()
-        {
-            ToastTemplateType toastType = ToastTemplateType.ToastText02;
-
-            XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastType);
-
-            XmlNodeList toastTextElement = toastXml.GetElementsByTagName("text");
-            toastTextElement[0].AppendChild(toastXml.CreateTextNode("Hello C# Corner"));
-            toastTextElement[1].AppendChild(toastXml.CreateTextNode("Jakaś treść"));
-
-            IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
-            ((XmlElement)toastNode).SetAttribute("duration", "long");
-
-            ToastNotification toast = new ToastNotification(toastXml);
-            ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
 
         private void DeleteNotification()
@@ -103,8 +88,15 @@ namespace Powiadomienia
                     if (item.Id == id)
                     { 
                         notifier.RemoveFromSchedule(item);
+                        IdService.Remove(item.Id);
                         break;
                     }
+                }
+
+                if (notItem.SecondsToEnd <= 3600 * 240)
+                {
+                    todayNotificationNumber--;
+                    BadgeService.ShowBadgeWithNumber(todayNotificationNumber);
                 }
 
                 NotificationList.Remove(notItem);
@@ -137,56 +129,105 @@ namespace Powiadomienia
 
         }
 
-        private void StartDTimer()
+        private void StartPeriodicTimer()
         {
-            dTimer = new DispatcherTimer();
-            dTimer.Interval = new TimeSpan(0, 0, 1);
-            dTimer.Tick += ChangeSeconds;
-            dTimer.Start();
-        }
-
-
-        private List<NotificationItem> ParseInitialListToNotificationItemList(List<ScheduledToastNotification> list)
-        {
-            List<NotificationItem> notItemList = new List<NotificationItem>();
-                 
-            foreach (ScheduledToastNotification item in list)
+            periodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
             {
-                NotificationItem notItem = new NotificationItem();
-                XmlDocument docXml = item.Content;
+                await Dispatcher.RunAsync(CoreDispatcherPriority.High,
+                () =>
+                {
+                    ChangeSeconds();
+                });
 
-                XmlNodeList toastTextElement = docXml.GetElementsByTagName("text");
-
-                notItem.Id = item.Id;
-                notItem.Title = toastTextElement[0].FirstChild.InnerText;
-                notItem.Content = toastTextElement[1].FirstChild.InnerText;
-
-                notItem.DeliveryTime = item.DeliveryTime.DateTime;
-
-                notItemList.Add(notItem);
-            }
-
-            return notItemList;
+            }, TimeSpan.FromSeconds(1));
         }
 
-        private void ChangeSeconds(object sender, object e)
+        private void ChangeSeconds()
         {
             List<NotificationItem> itemsToDelete = new List<NotificationItem>();
             foreach (NotificationItem notItem in NotificationList)
             {
-                
+
                 notItem.SecondsToEnd--;
-                
-                if (notItem.SecondsToEnd == 0)
+
+                if (notItem.SecondsToEnd < 0)
                 {
                     itemsToDelete.Add(notItem);
+                    todayNotificationNumber--;
+                    BadgeService.ShowBadgeWithNumber(todayNotificationNumber);
+                    LatestTileService.UpdateLatestTaskTile();
                 }
             }
 
             foreach (NotificationItem item in itemsToDelete)
             {
                 NotificationList.Remove(item);
+                IdService.Remove(item.Id);
             }
+        }
+
+       
+
+        private List<NotificationItem> ParseInitialListToNotificationItemList(List<ScheduledToastNotification> list)
+        {
+            List<NotificationItem> notItemList = new List<NotificationItem>();
+            
+            if (list.Count > 0)
+            {
+
+                foreach (ScheduledToastNotification item in list)
+                {
+                    NotificationItem notItem = new NotificationItem();
+                    XmlDocument docXml = item.Content;
+
+                    XmlNodeList toastTextElement = docXml.GetElementsByTagName("text");
+
+                    notItem.Id = item.Id;
+
+                    try
+                    {
+                        notItem.Title = toastTextElement[0].FirstChild.InnerText;
+                    }
+                    catch (Exception e)
+                    {
+                        notItem.Title = "";
+                    }
+
+                    try
+                    {
+                        notItem.Content = toastTextElement[1].FirstChild.InnerText;
+                    }
+                    catch (Exception e)
+                    {
+                        notItem.Content = "";
+                    }
+                   
+
+                    notItem.DeliveryTime = item.DeliveryTime.DateTime;
+
+                    notItemList.Add(notItem);
+
+                    IdService.AddNewId(Int32.Parse(item.Id));
+
+                    DateTime deliveryTime = item.DeliveryTime.DateTime;
+                    TimeSpan secondsSpan = deliveryTime.Subtract(DateTime.Now);
+                    int seconds = (int)secondsSpan.TotalSeconds;
+
+                    Debug.WriteLine("Iloość sekund powiadomienia: {0}", seconds);
+
+                    if (seconds <= 3600 * 24)
+                    {
+                        todayNotificationNumber++;
+                    }
+
+                }
+            }     
+
+
+            Debug.WriteLine("Pokazanie ilości numerków na dzisiaj: {0}", todayNotificationNumber);
+            BadgeService.ShowBadgeWithNumber(todayNotificationNumber);
+
+            return notItemList;
         }
 
         private async void ShowMessage(string message)
